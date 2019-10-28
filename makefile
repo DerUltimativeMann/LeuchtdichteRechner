@@ -21,5 +21,5 @@ $(PROG): $(OBJ)
 	rm $(OBJ)
 
 # Compiling
-src/%.c: %.o
+%.o: src/%.c
 	$(CC) $(CF) $<
