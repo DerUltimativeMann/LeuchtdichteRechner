@@ -13,7 +13,7 @@ LF = -lgdi32 -lopengl32
 CF = -c -Wall -pedantic -ansi
 
 # .o-files
-OBJ = main.o mainwnd.o modelwnd.o datawnd.o graphwnd.o geomath.o lightbody.o
+OBJ = main.o mainwnd.o modelwnd.o datawnd.o graphwnd.o graph.o
 
 # Binding
 $(PROG): $(OBJ)
@@ -25,4 +25,7 @@ $(PROG): $(OBJ)
 	$(CC) $(CF) $<
 
 %.o: src/gui/%.c
+	$(CC) $(CF) $<
+
+%.o: src/math/%.c
 	$(CC) $(CF) $<

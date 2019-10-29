@@ -2,11 +2,18 @@
 #define _APPLICATION_H
 
 #include <windows.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+/* Maths... */
+#include "../math/graph.h"
 
 /* Application messages */
 #define APPMSG_GETCHILDWNDMODEL     WM_APP + 1
 #define APPMSG_GETCHILDWNDDATA      WM_APP + 2
 #define APPMSG_GETCHILDWNDGRAPH     WM_APP + 3
+/* ... */
+#define APPMSG_SETUPGRAPH           WM_APP + 10
 
 /* Class identifier */
 #define MAINWND     "app_SeN_mainwnd"
