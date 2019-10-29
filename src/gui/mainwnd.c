@@ -25,26 +25,33 @@ int registerMainWnd(HINSTANCE hInstance)
 */
 LRESULT CALLBACK mainWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
 {
-    static HWND hModel, hData;
+    static HWND hModel, hData, hGraph;
     static RECT rect;
 
     switch(msg)
     {
         /* Application messages */
+        case APPMSG_GETCHILDWNDGRAPH:
+        hGraph = (HWND)lp;
+        return 0;
+
         case APPMSG_GETCHILDWNDDATA:
         hData = (HWND)lp;
-        InvalidateRect(hwnd, NULL, TRUE);
         return 0;
 
         case APPMSG_GETCHILDWNDMODEL:
         hModel = (HWND)lp;
-        InvalidateRect(hwnd, NULL, TRUE);
         return 0;
 
         /* windows messages */
         case WM_PAINT:
         case WM_SIZE:
         GetWindowRect(hwnd, &rect);
+        if(hGraph)
+        {
+            MoveWindow(hGraph, 8 + 0.3 * (rect.right - rect.left), 8, 0.5 * (rect.right - rect.left), (rect.bottom - rect.top - 60) / 2, TRUE);
+            ShowWindow(hGraph, SW_SHOW);
+        }
         if(hData)
         {
             MoveWindow(hData, 8, 8, 0.3 * (rect.right - rect.left), rect.bottom - rect.top - 60, TRUE);
@@ -52,7 +59,7 @@ LRESULT CALLBACK mainWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
         }
         if(hModel)
         {
-            MoveWindow(hModel, 8 + 0.3 * (rect.right - rect.left), 8, 0.5 * (rect.right - rect.left), rect.bottom - rect.top - 60, TRUE);
+            MoveWindow(hModel, 8 + 0.3 * (rect.right - rect.left), 8 + (rect.bottom - rect.top - 60) / 2, 0.5 * (rect.right - rect.left), (rect.bottom - rect.top - 60) / 2, TRUE);
             ShowWindow(hModel, SW_SHOW);
         }
         return 0;
@@ -66,6 +73,7 @@ LRESULT CALLBACK mainWndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
         case WM_DESTROY:
         hModel = NULL;
         hData = NULL;
+        hGraph = NULL;
         PostQuitMessage(0);
         return 0;
     }
